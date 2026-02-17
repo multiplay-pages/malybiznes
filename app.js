@@ -33,6 +33,7 @@ const BEZPIECZENSTWO = [
 ];
 
 function renderPricingTable(el, headColorClass, rows) {
+  if (!el) return;
   el.innerHTML = `
     <thead>
       <tr>
@@ -54,6 +55,7 @@ function renderPricingTable(el, headColorClass, rows) {
 }
 
 function renderPhoneTable(el, rows) {
+  if (!el) return;
   el.innerHTML = `
     <thead>
       <tr>
@@ -75,6 +77,7 @@ function renderPhoneTable(el, rows) {
 }
 
 function renderSecurityTable(el, rows) {
+  if (!el) return;
   el.innerHTML = `
     <thead>
       <tr>
@@ -95,42 +98,44 @@ function renderSecurityTable(el, rows) {
   `;
 }
 
-// Smooth scroll + aktywny pill
-function setupNav() {
+function setupPageRouting() {
   const nav = document.getElementById("pillnav");
-  const pills = Array.from(nav.querySelectorAll(".pill"));
+  if (!nav) return;
 
-  // smooth scroll
-  pills.forEach(p => {
-    p.addEventListener("click", (e) => {
-      const href = p.getAttribute("href");
-      if (!href?.startsWith("#")) return;
-      e.preventDefault();
-      const target = document.querySelector(href);
-      if (!target) return;
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
-      history.replaceState(null, "", href);
+  const pills = Array.from(nav.querySelectorAll(".pill"));
+  const sections = Array.from(document.querySelectorAll("main > section"));
+  const validIds = new Set(sections.map(section => section.id));
+
+  const activateSection = (id) => {
+    const targetId = validIds.has(id) ? id : "start";
+
+    sections.forEach(section => {
+      section.classList.toggle("is-hidden", section.id !== targetId);
+    });
+
+    pills.forEach(pill => {
+      const isActive = pill.dataset.section === targetId;
+      pill.classList.toggle("is-active", isActive);
+      pill.setAttribute("aria-current", isActive ? "page" : "false");
+    });
+  };
+
+  const getRouteFromHash = () => window.location.hash.replace("#", "") || "start";
+
+  pills.forEach(pill => {
+    pill.addEventListener("click", (event) => {
+      const href = pill.getAttribute("href");
+      if (!href || !href.startsWith("#")) return;
+      event.preventDefault();
+      const id = href.replace("#", "");
+      history.pushState(null, "", href);
+      activateSection(id);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
   });
 
-  // active on scroll (IntersectionObserver)
-  const sections = pills
-    .map(p => document.getElementById(p.dataset.section))
-    .filter(Boolean);
-
-  const obs = new IntersectionObserver((entries) => {
-    // wybierz najbardziej "widoczną" sekcję
-    const visible = entries
-      .filter(e => e.isIntersecting)
-      .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-    if (!visible) return;
-    const id = visible.target.id;
-
-    pills.forEach(p => p.classList.toggle("is-active", p.dataset.section === id));
-  }, { rootMargin: "-25% 0px -60% 0px", threshold: [0.12, 0.2, 0.35] });
-
-  sections.forEach(s => obs.observe(s));
+  window.addEventListener("hashchange", () => activateSection(getRouteFromHash()));
+  activateSection(getRouteFromHash());
 }
 
 (function init(){
@@ -139,5 +144,5 @@ function setupNav() {
   renderPhoneTable(document.getElementById("tablePhone"), TELEFON);
   renderSecurityTable(document.getElementById("tableSecurity"), BEZPIECZENSTWO);
 
-  setupNav();
+  setupPageRouting();
 })();
