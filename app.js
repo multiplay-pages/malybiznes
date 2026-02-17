@@ -1,227 +1,143 @@
-const VAT = 0.23;
+// Dane (zgodne ze screenami)
+const TARYFY_24 = [
+  ["do 100/50 Mb/s", "70 zł", "90 zł"],
+  ["do 350/175 Mb/s", "70 zł", "90 zł"],
+  ["do 500/200 Mb/s", "80 zł", "100 zł"],
+  ["do 600/300 Mb/s", "80 zł", "100 zł"],
+  ["do 800/400 Mb/s", "85 zł", "105 zł"],
+  ["do 1000/500 Mb/s", "90 zł", "110 zł"],
+  ["do 2000/1000 Mb/s", "135 zł", "155 zł"],
+];
 
-const data = {
-  plans: [
-    // UZUPEŁNIJ realnymi danymi (u Ciebie część już jest w obecnej stronie)
-    // przykład:
-    { id: "100", label: "100 Mb/s", price24: 49, price12: 59, note: "Netto / m-c" },
-    { id: "600", label: "600 Mb/s", price24: 69, price12: 79, note: "Netto / m-c" },
-    { id: "1000", label: "1000 Mb/s", price24: 89, price12: 99, note: "Netto / m-c" }
-  ],
-  addons: {
-    phone: [
-      { id: "tel60", label: "60 min (PL/UE)", price: 10 },
-      { id: "tel300", label: "300 min (PL/UE)", price: 15 },
-      { id: "telnolimit", label: "No-Limit (PL)", price: 20 }
-    ],
-    infra: [
-      { id: "ip", label: "Stały adres IP", price: 20 },
-      { id: "mesh", label: "WiFi Premium (Mesh)", price: 10 },
-      { id: "install", label: "Instalacja Std.", price: 200, oneTime: true }
-    ],
-    sec: [
-      { id: "bdmob", label: "Bitdefender Mobile", price: 6 },
-      { id: "bd1", label: "Bitdefender 1 PC", price: 9 },
-      { id: "bd3", label: "Bitdefender 3 PC", price: 15 }
-    ]
-  }
-};
+const TARYFY_12 = [
+  ["do 100/50 Mb/s", "80 zł", "90 zł"],
+  ["do 350/175 Mb/s", "80 zł", "90 zł"],
+  ["do 500/200 Mb/s", "90 zł", "100 zł"],
+  ["do 600/300 Mb/s", "90 zł", "100 zł"],
+  ["do 800/400 Mb/s", "95 zł", "105 zł"],
+  ["do 1000/500 Mb/s", "100 zł", "110 zł"],
+  ["do 2000/1000 Mb/s", "145 zł", "155 zł"],
+];
 
-let state = {
-  term: 24,
-  planId: null,
-  addons: new Set()
-};
+const TELEFON = [
+  ["Telefon 60 minut", "10 zł", "Połączenia na stacjonarne i komórkowe w Polsce oraz stacjonarne w UE"],
+  ["Telefon 300 minut", "15 zł", "Połączenia na stacjonarne i komórkowe w Polsce oraz stacjonarne w UE"],
+  ["Telefon No-Limit", "20 zł", "Połączenia na stacjonarne i komórkowe w Polsce oraz stacjonarne w UE"],
+];
 
-const els = {
-  btn24: document.getElementById("btn24"),
-  btn12: document.getElementById("btn12"),
-  plans: document.getElementById("plans"),
-  addonsPhone: document.getElementById("addonsPhone"),
-  addonsInfra: document.getElementById("addonsInfra"),
-  addonsSec: document.getElementById("addonsSec"),
-  summaryLines: document.getElementById("summaryLines"),
-  totalNet: document.getElementById("totalNet"),
-  totalGross: document.getElementById("totalGross"),
-  copySummary: document.getElementById("copySummary")
-};
+const BEZPIECZENSTWO = [
+  ["📱 Bitdefender Mobile", "Telefon służbowy", "6 zł"],
+  ["💻 Bitdefender 1 PC/macOS", "1 stanowisko pracy", "9 zł"],
+  ["🖥️ Bitdefender 3 PC/macOS", "Małe biuro (2–3 urządzenia)", "15 zł"],
+  ["👨‍👩‍👧‍👦 Bitdefender Family", "Wiele urządzeń (biuro + dom)", "20 zł"],
+];
 
-function fmtPLN(v){
-  return `${Math.round(v * 100) / 100} zł`;
+function renderPricingTable(el, headColorClass, rows) {
+  el.innerHTML = `
+    <thead>
+      <tr>
+        <th class="${headColorClass}">Taryfa</th>
+        <th class="${headColorClass}" style="text-align:center">W trakcie</th>
+        <th class="${headColorClass}" style="text-align:center">Po przejściu</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${rows.map(r => `
+        <tr>
+          <td>${r[0]}</td>
+          <td>${r[1]}</td>
+          <td style="text-align:center">${r[2]}</td>
+        </tr>
+      `).join("")}
+    </tbody>
+  `;
 }
 
-function getSelectedPlan(){
-  return data.plans.find(p => p.id === state.planId) || null;
+function renderPhoneTable(el, rows) {
+  el.innerHTML = `
+    <thead>
+      <tr>
+        <th>Dodatek</th>
+        <th style="text-align:center">Cena NETTO/mies.</th>
+        <th>Dostępność</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${rows.map(r => `
+        <tr>
+          <td><strong>${r[0]}</strong></td>
+          <td>${r[1]}</td>
+          <td>${r[2]}</td>
+        </tr>
+      `).join("")}
+    </tbody>
+  `;
 }
 
-function addonById(id){
-  const all = [...data.addons.phone, ...data.addons.infra, ...data.addons.sec];
-  return all.find(a => a.id === id) || null;
+function renderSecurityTable(el, rows) {
+  el.innerHTML = `
+    <thead>
+      <tr>
+        <th>Pakiet</th>
+        <th>Dla kogo</th>
+        <th style="text-align:right">Cena NETTO/mies.</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${rows.map(r => `
+        <tr>
+          <td><strong>${r[0]}</strong></td>
+          <td>${r[1]}</td>
+          <td>${r[2]}</td>
+        </tr>
+      `).join("")}
+    </tbody>
+  `;
 }
 
-function monthlyNet(){
-  const plan = getSelectedPlan();
-  let sum = 0;
-  if (plan){
-    sum += (state.term === 24 ? plan.price24 : plan.price12);
-  }
+// Smooth scroll + aktywny pill
+function setupNav() {
+  const nav = document.getElementById("pillnav");
+  const pills = Array.from(nav.querySelectorAll(".pill"));
 
-  for (const id of state.addons){
-    const a = addonById(id);
-    if (!a) continue;
-    if (a.oneTime) continue; // jednorazówki nie wliczamy do miesięcznego
-    sum += a.price;
-  }
-  return sum;
-}
-
-function oneTimeNet(){
-  let sum = 0;
-  for (const id of state.addons){
-    const a = addonById(id);
-    if (a?.oneTime) sum += a.price;
-  }
-  return sum;
-}
-
-function renderPlans(){
-  els.plans.innerHTML = "";
-  data.plans.forEach(p => {
-    const price = state.term === 24 ? p.price24 : p.price12;
-    const div = document.createElement("div");
-    div.className = "card plan" + (state.planId === p.id ? " is-selected" : "");
-    div.innerHTML = `
-      <div class="plan__speed">${p.label}</div>
-      <div class="plan__price">${fmtPLN(price)}</div>
-      <div class="plan__meta">${p.note || "Netto / m-c"}</div>
-    `;
-    div.addEventListener("click", () => {
-      state.planId = p.id;
-      renderAll();
+  // smooth scroll
+  pills.forEach(p => {
+    p.addEventListener("click", (e) => {
+      const href = p.getAttribute("href");
+      if (!href?.startsWith("#")) return;
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (!target) return;
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      history.replaceState(null, "", href);
     });
-    els.plans.appendChild(div);
   });
+
+  // active on scroll (IntersectionObserver)
+  const sections = pills
+    .map(p => document.getElementById(p.dataset.section))
+    .filter(Boolean);
+
+  const obs = new IntersectionObserver((entries) => {
+    // wybierz najbardziej "widoczną" sekcję
+    const visible = entries
+      .filter(e => e.isIntersecting)
+      .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+    if (!visible) return;
+    const id = visible.target.id;
+
+    pills.forEach(p => p.classList.toggle("is-active", p.dataset.section === id));
+  }, { rootMargin: "-25% 0px -60% 0px", threshold: [0.12, 0.2, 0.35] });
+
+  sections.forEach(s => obs.observe(s));
 }
 
-function renderAddonList(targetEl, items){
-  targetEl.innerHTML = "";
-  items.forEach(a => {
-    const row = document.createElement("div");
-    row.className = "item";
-    const checked = state.addons.has(a.id) ? "checked" : "";
-    const priceLabel = a.oneTime ? `${fmtPLN(a.price)} (jednorazowo)` : fmtPLN(a.price);
-    row.innerHTML = `
-      <label>
-        <input type="checkbox" data-id="${a.id}" ${checked}/>
-        <span>${a.label}</span>
-      </label>
-      <div class="item__price">${priceLabel}</div>
-    `;
-    row.querySelector("input").addEventListener("change", (e) => {
-      const id = e.target.getAttribute("data-id");
-      if (e.target.checked) state.addons.add(id);
-      else state.addons.delete(id);
-      renderSummary();
-    });
-    targetEl.appendChild(row);
-  });
-}
+(function init(){
+  renderPricingTable(document.getElementById("table24"), "h24", TARYFY_24);
+  renderPricingTable(document.getElementById("table12"), "h12", TARYFY_12);
+  renderPhoneTable(document.getElementById("tablePhone"), TELEFON);
+  renderSecurityTable(document.getElementById("tableSecurity"), BEZPIECZENSTWO);
 
-function renderSummary(){
-  els.summaryLines.innerHTML = "";
-
-  const plan = getSelectedPlan();
-  if (plan){
-    const price = state.term === 24 ? plan.price24 : plan.price12;
-    addLine(`Internet: ${plan.label} (umowa ${state.term} m-cy)`, fmtPLN(price));
-  } else {
-    addLine(`Internet`, `— wybierz taryfę`);
-  }
-
-  // dodatki
-  const monthly = [];
-  const oneTime = [];
-  for (const id of state.addons){
-    const a = addonById(id);
-    if (!a) continue;
-    (a.oneTime ? oneTime : monthly).push(a);
-  }
-
-  monthly.sort((x,y) => x.price - y.price).forEach(a => addLine(a.label, fmtPLN(a.price)));
-  oneTime.sort((x,y) => x.price - y.price).forEach(a => addLine(`${a.label} (jednorazowo)`, fmtPLN(a.price)));
-
-  const mNet = monthlyNet();
-  const mGross = mNet * (1 + VAT);
-
-  els.totalNet.textContent = fmtPLN(mNet);
-  els.totalGross.textContent = fmtPLN(mGross);
-
-  // dopis jednorazówki jeśli są
-  const ot = oneTimeNet();
-  if (ot > 0){
-    const hint = document.createElement("div");
-    hint.className = "tiny muted";
-    hint.style.marginTop = "10px";
-    hint.textContent = `Jednorazowo (netto): ${fmtPLN(ot)} • brutto: ${fmtPLN(ot * (1 + VAT))}`;
-    els.summaryLines.appendChild(hint);
-  }
-}
-
-function addLine(left, right){
-  const div = document.createElement("div");
-  div.className = "line";
-  div.innerHTML = `<div>${left}</div><div><strong>${right}</strong></div>`;
-  els.summaryLines.appendChild(div);
-}
-
-function setTerm(term){
-  state.term = term;
-  els.btn24.classList.toggle("is-active", term === 24);
-  els.btn12.classList.toggle("is-active", term === 12);
-  renderAll();
-}
-
-function copySummaryToClipboard(){
-  const plan = getSelectedPlan();
-  const lines = [];
-  lines.push(`Oferta Biznes 3.1 — podsumowanie (netto)`);
-  lines.push(`Umowa: ${state.term} m-cy`);
-  if (plan){
-    const price = state.term === 24 ? plan.price24 : plan.price12;
-    lines.push(`Internet: ${plan.label} — ${fmtPLN(price)} / m-c`);
-  } else {
-    lines.push(`Internet: (nie wybrano taryfy)`);
-  }
-
-  for (const id of state.addons){
-    const a = addonById(id);
-    if (!a) continue;
-    lines.push(`${a.label}${a.oneTime ? " (jednorazowo)" : ""}: ${fmtPLN(a.price)}`);
-  }
-
-  lines.push(`Miesięcznie netto: ${fmtPLN(monthlyNet())}`);
-  lines.push(`Miesięcznie brutto: ${fmtPLN(monthlyNet() * (1 + VAT))}`);
-  const ot = oneTimeNet();
-  if (ot > 0){
-    lines.push(`Jednorazowo netto: ${fmtPLN(ot)}`);
-    lines.push(`Jednorazowo brutto: ${fmtPLN(ot * (1 + VAT))}`);
-  }
-
-  navigator.clipboard.writeText(lines.join("\n")).catch(() => {});
-}
-
-function renderAll(){
-  renderPlans();
-  renderAddonList(els.addonsPhone, data.addons.phone);
-  renderAddonList(els.addonsInfra, data.addons.infra);
-  renderAddonList(els.addonsSec, data.addons.sec);
-  renderSummary();
-}
-
-// events
-els.btn24.addEventListener("click", () => setTerm(24));
-els.btn12.addEventListener("click", () => setTerm(12));
-els.copySummary.addEventListener("click", copySummaryToClipboard);
-
-// init
-setTerm(24);
+  setupNav();
+})();
