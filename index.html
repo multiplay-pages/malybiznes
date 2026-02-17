@@ -3,174 +3,410 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Oferta Biznes 3.1 — Konfigurator</title>
-  <meta name="description" content="Konfigurator oferty Internet dla Firm — ceny netto, dodatki i podsumowanie." />
+  <title>Oferta Internetowa dla Biznesu — Ceny NETTO</title>
+  <meta name="description" content="Oferta Internetowa dla Biznesu — taryfy 12/24, dodatki, bezpieczeństwo, warunki, łączenie promocji." />
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
   <header class="topbar">
     <div class="container topbar__inner">
-      <div class="brand">
-        <div class="brand__logo">MP</div>
-        <div class="brand__text">
-          <div class="brand__title">Oferta Biznes 3.1</div>
-          <div class="brand__subtitle">Konfigurator • Cennik Netto</div>
-        </div>
-      </div>
-
-      <nav class="nav">
-        <a href="#cennik">Cennik</a>
-        <a href="#dodatki">Dodatki</a>
-        <a href="#podsumowanie">Podsumowanie</a>
-        <a class="btn btn--ghost" href="#kontakt">Kontakt</a>
+      <nav class="pillnav" id="pillnav">
+        <a class="pill is-active" href="#start" data-section="start">🏠 Start</a>
+        <a class="pill" href="#taryfy24" data-section="taryfy24">📋 Taryfy 24</a>
+        <a class="pill" href="#taryfy12" data-section="taryfy12">📄 Taryfy 12</a>
+        <a class="pill" href="#porownanie" data-section="porownanie">⚖️ Porównanie</a>
+        <a class="pill" href="#dodatki" data-section="dodatki">➕ Dodatki</a>
+        <a class="pill" href="#bezpieczenstwo" data-section="bezpieczenstwo">🛡️ Bezpieczeństwo</a>
+        <a class="pill" href="#warunki" data-section="warunki">📜 Warunki</a>
+        <a class="pill" href="#laczenie" data-section="laczenie">🔗 Łączenie</a>
+        <a class="pill" href="#kontakt" data-section="kontakt">📞 Kontakt</a>
       </nav>
     </div>
   </header>
 
-  <main>
-    <section class="hero">
-      <div class="container hero__inner">
-        <div>
-          <h1>Internet dla Firm — prosto, jasno, bez magii.</h1>
-          <p class="muted">
-            Wybierz okres umowy, taryfę i dodatki. Na końcu masz czytelne podsumowanie cen netto (+ VAT).
-          </p>
+  <!-- HERO / START -->
+  <section id="start" class="hero">
+    <div class="container hero__inner">
+      <h1>Oferta Internetowa dla Biznesu</h1>
+      <div class="hero__sub">Ceny NETTO</div>
 
-          <div class="cta">
-            <a class="btn" href="#cennik">Konfiguruj ofertę</a>
-            <a class="btn btn--ghost" href="#kontakt">Zamów kontakt</a>
-          </div>
+      <div class="tilegrid">
+        <a class="tile" href="#taryfy24">
+          <div class="tile__icon">📋</div>
+          <div class="tile__title">Taryfy 24</div>
+        </a>
+        <a class="tile" href="#taryfy12">
+          <div class="tile__icon">📄</div>
+          <div class="tile__title">Taryfy 12</div>
+        </a>
+        <a class="tile" href="#porownanie">
+          <div class="tile__icon">⚖️</div>
+          <div class="tile__title">Porównanie</div>
+        </a>
+        <a class="tile" href="#dodatki">
+          <div class="tile__icon">➕</div>
+          <div class="tile__title">Dodatki</div>
+        </a>
 
-          <div class="chips">
-            <span class="chip">Ceny netto</span>
-            <span class="chip">Dodatki opcjonalne</span>
-            <span class="chip">Podsumowanie 1:1</span>
+        <a class="tile" href="#bezpieczenstwo">
+          <div class="tile__icon">🛡️</div>
+          <div class="tile__title">Bezpieczeństwo</div>
+        </a>
+        <a class="tile" href="#warunki">
+          <div class="tile__icon">📜</div>
+          <div class="tile__title">Warunki</div>
+        </a>
+        <a class="tile" href="#laczenie">
+          <div class="tile__icon">🔗</div>
+          <div class="tile__title">Łączenie</div>
+        </a>
+        <a class="tile" href="#kontakt">
+          <div class="tile__icon">📞</div>
+          <div class="tile__title">Kontakt</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TARYFY 24 -->
+  <section id="taryfy24" class="section">
+    <div class="container">
+      <div class="section__title">Taryfy 24 miesięcy</div>
+      <div class="section__subtitle">Najniższe ceny</div>
+
+      <div class="tablecard">
+        <table class="pricing" id="table24"></table>
+      </div>
+
+      <div class="section__foot">
+        <a class="btn btn--ghost" href="#start">← Start</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TARYFY 12 -->
+  <section id="taryfy12" class="section section--soft">
+    <div class="container">
+      <div class="section__title">Taryfy 12 miesięcy</div>
+      <div class="section__subtitle">Elastyczna umowa</div>
+
+      <div class="tablecard">
+        <table class="pricing" id="table12"></table>
+      </div>
+
+      <div class="section__foot">
+        <a class="btn btn--ghost" href="#start">← Start</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORÓWNANIE -->
+  <section id="porownanie" class="section">
+    <div class="container">
+      <div class="section__title">⚖️ Porównanie: 12 vs 24</div>
+
+      <div class="compare">
+        <div class="compare__card compare__card--green">
+          <div class="compare__head">24 miesiące</div>
+          <ul class="checklist">
+            <li>✓ <strong>Niższy abonament</strong> w trakcie zobowiązania</li>
+            <li>✓ Ten sam mechanizm przejścia na czas nieokreślony</li>
+          </ul>
+        </div>
+
+        <div class="compare__card compare__card--orange">
+          <div class="compare__head">12 miesięcy</div>
+          <ul class="checklist">
+            <li>• <strong>Wyższy abonament</strong> w trakcie zobowiązania</li>
+            <li>• Ten sam mechanizm przejścia na czas nieokreślony</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note note--blue">
+        <strong>Po zakończeniu okresu promocyjnego:</strong>
+        Automatyczne przejście na czas nieokreślony i wzrost abonamentu o
+        <strong class="accent">+20 zł/mies.</strong>
+      </div>
+
+      <div class="btnrow">
+        <a class="btn btn--dark" href="#warunki">Warunki →</a>
+        <a class="btn btn--primary" href="#laczenie">Łączenie →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- DODATKI -->
+  <section id="dodatki" class="section section--soft">
+    <div class="container">
+      <div class="section__title">➕ Usługi dodatkowe i opłaty</div>
+
+      <div class="card">
+        <div class="card__head">
+          <span class="pilltag">📞 TELEFON</span>
+        </div>
+        <div class="tablewrap">
+          <table class="addonsTable" id="tablePhone"></table>
+        </div>
+        <div class="card__foot muted">
+          Połączenia poza abonamentem wg cennika szczegółowego (odrębny załącznik).
+        </div>
+      </div>
+
+      <div class="grid3">
+        <div class="mini">
+          <div class="mini__title">🌐 Stały adres IP</div>
+          <div class="mini__price green">20 zł/mies.</div>
+          <div class="mini__text">
+            <strong>Dostępne:</strong> 350/175, 500/200, 800/400, 1000/500, 2000/1000
+            <hr/>
+            <strong class="red">BRAK</strong><br/>
+            <span class="muted">Niedostępne: 100/50, 600/300</span>
           </div>
         </div>
 
-        <div class="card hero__card">
-          <div class="card__title">Okres umowy</div>
-          <div class="toggle" role="group" aria-label="Okres umowy">
-            <button id="btn24" class="toggle__btn is-active" type="button">24 miesiące</button>
-            <button id="btn12" class="toggle__btn" type="button">12 miesięcy</button>
+        <div class="mini">
+          <div class="mini__title">📡 WiFi Premium</div>
+          <div class="mini__price green">10 zł/mies.</div>
+          <div class="mini__text">
+            <strong>Dostępne:</strong> 600/300, 800/400, 1000/500, 2000/1000
+            <hr/>
+            <strong class="red">BRAK</strong><br/>
+            <span class="muted">Niedostępne: 100/50, 350/175, 500/200</span>
           </div>
-          <div class="tiny muted">
-            Po zakończeniu okresu promocyjnego umowa przechodzi na czas nieokreślony,
-            a abonament wzrasta o <strong>20 zł netto</strong>.
+        </div>
+
+        <div class="mini">
+          <div class="mini__title">🔁 Mesh (aktywacja)</div>
+          <div class="mini__text">
+            <div><span class="green">89 zł</span> (self-install)</div>
+            <div class="muted">Taryfy: 600/300 i wyżej</div>
+            <div style="margin-top:10px"><span class="green">209 zł</span> (technik)</div>
+            <div class="muted">Taryfy: 600/300 i wyżej</div>
           </div>
         </div>
       </div>
-    </section>
 
-    <section id="cennik" class="section">
-      <div class="container">
-        <div class="section__head">
-          <h2>Cennik Internetu</h2>
-          <p class="muted">Wybierz jedną taryfę. Ceny netto (+23% VAT).</p>
+      <div class="install">
+        <div class="install__card install__card--promo">
+          <div class="install__title">🛠️ INSTALACJA</div>
+          <div class="install__label">W promocji</div>
+          <div class="install__value">200 zł NETTO</div>
+          <div class="muted">Wszystkie taryfy</div>
         </div>
 
-        <div id="plans" class="grid"></div>
-      </div>
-    </section>
-
-    <section id="dodatki" class="section section--alt">
-      <div class="container">
-        <div class="section__head">
-          <h2>Dodatki</h2>
-          <p class="muted">Zaznacz, co ma być uruchomione. Ceny netto.</p>
-        </div>
-
-        <div class="addons">
-          <div class="addons__col">
-            <h3>Telefon stacjonarny</h3>
-            <div id="addonsPhone" class="list"></div>
-          </div>
-
-          <div class="addons__col">
-            <h3>Infrastruktura</h3>
-            <div id="addonsInfra" class="list"></div>
-            <div class="tiny muted">
-              Stały adres IP niedostępny dla taryf <strong>100 Mb/s</strong> i <strong>600 Mb/s</strong>.
-              WiFi Premium dostępne od taryfy <strong>600 Mb/s</strong>.
-            </div>
-          </div>
-
-          <div class="addons__col">
-            <h3>Bezpieczeństwo</h3>
-            <div id="addonsSec" class="list"></div>
-          </div>
+        <div class="install__card install__card--std">
+          <div class="install__label">Na czas nieokreślony</div>
+          <div class="install__value">813,01 zł NETTO</div>
+          <div class="muted">(1000 zł brutto)</div>
         </div>
       </div>
-    </section>
 
-    <section id="podsumowanie" class="section">
-      <div class="container">
-        <div class="section__head">
-          <h2>Podsumowanie</h2>
-          <p class="muted">Suma jest liczona automatycznie na podstawie wyborów.</p>
+      <div class="note note--gray">
+        <div class="note__title">📄 Pozostałe usługi</div>
+        <div class="muted">
+          Łącze symetryczne, SLA, wirtualna centrala i inne dodatki telefoniczne oraz stały niezmienny
+          rzeczywisty adres IP — wg oferty dla dużego biznesu.
         </div>
+        <div style="margin-top:8px">📧 Zgłoszenia: <strong>biznes@multiplay.pl</strong></div>
+      </div>
 
-        <div class="summary">
-          <div class="card">
-            <div class="card__title">Twoja konfiguracja</div>
-            <div id="summaryLines" class="summary__lines"></div>
+      <div class="btnrow">
+        <a class="btn btn--dark" href="#warunki">Warunki →</a>
+        <a class="btn btn--primary" href="#laczenie">Łączenie →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BEZPIECZEŃSTWO -->
+  <section id="bezpieczenstwo" class="section">
+    <div class="container">
+      <div class="section__title">🛡️ Pakiet Bezpieczeństwa</div>
+      <div class="section__subtitle">Bitdefender — ochrona dla biznesu</div>
+
+      <div class="tablecard tablecard--red">
+        <table class="security" id="tableSecurity"></table>
+      </div>
+
+      <div class="subhead">🎯 Jak dobrać pakiet?</div>
+      <div class="pickgrid">
+        <div class="pick pick--red">
+          <div class="pick__title">📱 Smartphone</div>
+          <div class="muted">Wybierz <strong>Mobile</strong> dla służbowego telefonu</div>
+        </div>
+        <div class="pick pick--orange">
+          <div class="pick__title">💻 Jedno stanowisko</div>
+          <div class="muted">Wybierz <strong>1 PC</strong> dla jednego komputera</div>
+        </div>
+        <div class="pick pick--blue">
+          <div class="pick__title">🧑‍🤝‍🧑 Biuro 2–3 osób</div>
+          <div class="muted">Wybierz <strong>3 PC</strong> dla małego zespołu</div>
+        </div>
+        <div class="pick pick--purple">
+          <div class="pick__title">👨‍👩‍👧‍👦 Wiele urządzeń</div>
+          <div class="muted">Wybierz <strong>Family</strong> dla biura + domu</div>
+        </div>
+      </div>
+
+      <div class="btnrow">
+        <a class="btn btn--dark" href="#warunki">Warunki →</a>
+        <a class="btn btn--primary" href="#laczenie">Łączenie →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- WARUNKI -->
+  <section id="warunki" class="section section--soft">
+    <div class="container">
+      <div class="section__title">📜 Warunki i zasady</div>
+
+      <div class="card">
+        <div class="card__head"><span class="pilltag">👥 Dla kogo jest oferta?</span></div>
+        <ul class="checklist checklist--big">
+          <li>✓ Małe i średnie biznesy</li>
+          <li>✓ <strong>Nowi klienci</strong> — dostępna dla każdego</li>
+          <li>✓ <strong>Obecni klienci</strong> — pod warunkami (patrz poniżej)</li>
+          <li>✓ Dostępna tylko na obszarach z możliwościami technicznymi świadczenia internetu</li>
+        </ul>
+      </div>
+
+      <div class="note note--lightblue">
+        <div class="note__title">🔄 Obecni klienci mogą skorzystać gdy:</div>
+        <div class="rulebox">
+          <div class="ruleline"><strong>a)</strong> Umowa ma <strong>mniej niż 3 miesiące</strong> okresu zobowiązania promocyjnego</div>
+          <div class="ruleline"><strong>b)</strong> Umowa ma <strong>więcej niż 3 miesiące</strong>, ale rachunek za internet <strong>musi być wyższy</strong> od obecnego opłacanego</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card__head"><span class="pilltag">📄 Reguły usług dodatkowych</span></div>
+        <div class="rulegrid">
+          <div class="rulecard rulecard--orange">
+            <div class="rulecard__title">⏱️ Czas świadczenia</div>
+            <div class="muted">Minimalny okres: 3 pełne miesiące</div>
           </div>
-
-          <div class="card summary__total">
-            <div class="card__title">Razem</div>
-            <div class="price">
-              <div class="price__value" id="totalNet">0 zł</div>
-              <div class="tiny muted">netto / miesiąc</div>
-            </div>
-            <div class="price">
-              <div class="price__value" id="totalGross">0 zł</div>
-              <div class="tiny muted">brutto / miesiąc (VAT 23%)</div>
-            </div>
-
-            <div class="cta">
-              <a class="btn" href="#kontakt">Wyślij zapytanie</a>
-              <button class="btn btn--ghost" id="copySummary" type="button">Kopiuj podsumowanie</button>
-            </div>
-
-            <div class="tiny muted">
-              Oferta dostępna w zasięgu sieci. Szczegóły i warunki potwierdzamy w kontakcie.
-            </div>
+          <div class="rulecard rulecard--green">
+            <div class="rulecard__title">🧾 Naliczanie</div>
+            <div class="muted">Od pierwszego pełnego miesiąca</div>
+          </div>
+          <div class="rulecard rulecard--blue">
+            <div class="rulecard__title">↗️ Droższy wariant</div>
+            <div class="muted">Przejście w dowolnym momencie</div>
+          </div>
+          <div class="rulecard rulecard--red">
+            <div class="rulecard__title">↘️ Tańszy wariant</div>
+            <div class="muted">Dopiero 3 mies. przed końcem promocji</div>
           </div>
         </div>
       </div>
-    </section>
 
-    <section id="kontakt" class="section section--alt">
-      <div class="container">
-        <div class="section__head">
-          <h2>Kontakt</h2>
-          <p class="muted">Tu możesz wkleić swoje dane / formularz / link do CRM.</p>
-        </div>
-
-        <div class="card">
-          <div class="contact">
-            <div>
-              <div class="contact__label">Telefon</div>
-              <div class="contact__value">+48 …</div>
-            </div>
-            <div>
-              <div class="contact__label">E-mail</div>
-              <div class="contact__value">…@multiplay.pl</div>
-            </div>
-            <div>
-              <div class="contact__label">Zasięg</div>
-              <div class="contact__value"><a href="#">Sprawdź adres</a></div>
-            </div>
+      <div class="timeline">
+        <div class="timeline__title">⏳ Oś czasu promocji</div>
+        <div class="timeline__grid">
+          <div class="tstep">
+            <div class="tstep__icon">🚀</div>
+            <div class="tstep__title">Start</div>
+            <div class="muted">Aktywacja usługi</div>
           </div>
-          <div class="tiny muted">Możemy tu też dodać prosty formularz (GitHub Pages obsłuży np. Formspree / Getform).</div>
+          <div class="tarrow">→</div>
+          <div class="tstep">
+            <div class="tstep__icon">🗓️</div>
+            <div class="tstep__title">12 lub 24 mies.</div>
+            <div class="muted">Okres zobowiązania</div>
+          </div>
+          <div class="tarrow">→</div>
+          <div class="tstep">
+            <div class="tstep__icon">🔁</div>
+            <div class="tstep__title">Czas nieokreślony</div>
+            <div class="muted"><strong class="accent">+20 zł/mies.</strong></div>
+          </div>
         </div>
       </div>
-    </section>
-  </main>
+
+      <div class="section__foot">
+        <a class="btn btn--ghost" href="#start">← Start</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ŁĄCZENIE -->
+  <section id="laczenie" class="section">
+    <div class="container">
+      <div class="section__title">🔗 Łączenie promocji + wyjście</div>
+
+      <div class="card">
+        <div class="card__head"><span class="pilltag">🔗 Łączenie promocji</span></div>
+        <div class="stack">
+          <div class="stack__item stack__item--blue">
+            <div class="stack__title">Promocja 1: Miesiące za 1 zł</div>
+            <div class="muted">Łączy się z bieżącą ofertą internetową</div>
+          </div>
+          <div class="stack__item stack__item--blue">
+            <div class="stack__title">Promocja 2: Zmiana wartości opłat</div>
+            <div class="muted">Łączy się z promocją zmieniającą wartość opłat instalacyjnych / aktywacyjnych</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="note note--green">
+        <div class="note__title">📝 Zastosowanie w praktyce</div>
+        <ul class="checklist checklist--big">
+          <li>✓ Nadpisanie wartości opłat w formularzu oferty</li>
+          <li>✓ Wymaga zgodę przełożonego</li>
+          <li>✓ Wymaga adnotacji w notatce wewnętrznej oferty/umowy</li>
+        </ul>
+      </div>
+
+      <div class="note note--red">
+        <div class="note__title">🛑 Wyjście z promocji</div>
+        <div class="muted" style="margin-top:6px">Po zakończeniu okresu promocyjnego:</div>
+        <div class="rulebox" style="margin-top:10px">
+          <div class="ruleline"><strong>Automatyczne przejście</strong> na czas nieokreślony</div>
+          <div class="ruleline"><strong>Skutek:</strong> wzrost abonamentu o <strong class="accent">+20 zł/mies.</strong></div>
+        </div>
+      </div>
+
+      <div class="section__foot">
+        <a class="btn btn--ghost" href="#start">← Start</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- KONTAKT -->
+  <section id="kontakt" class="section section--soft">
+    <div class="container">
+      <div class="section__title">📞 Kontakt</div>
+
+      <div class="contactcard">
+        <div class="contactrow">
+          <div class="contactitem">
+            <div class="muted">Telefon</div>
+            <div class="contactvalue">+48 …</div>
+          </div>
+          <div class="contactitem">
+            <div class="muted">E-mail</div>
+            <div class="contactvalue">biznes@multiplay.pl</div>
+          </div>
+          <div class="contactitem">
+            <div class="muted">Zasięg</div>
+            <div class="contactvalue"><a href="#" class="link">Sprawdź adres</a></div>
+          </div>
+        </div>
+
+        <div class="muted" style="margin-top:10px">
+          Tu możesz podmienić na realne dane, albo podpiąć formularz (np. Formspree/Getform).
+        </div>
+      </div>
+
+      <div class="section__foot">
+        <a class="btn btn--ghost" href="#start">← Start</a>
+      </div>
+    </div>
+  </section>
 
   <footer class="footer">
-    <div class="container tiny">
-      © Multiplay Pages • Podane ceny są cenami netto (+23% VAT).
+    <div class="container">
+      <div class="muted small">© Multiplay • Oferta dla Biznesu • Ceny NETTO</div>
     </div>
   </footer>
 
