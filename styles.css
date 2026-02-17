@@ -81,6 +81,7 @@ h1{margin:0;font-size:44px;letter-spacing:-.02em}
 .tile:hover{transform:translateY(-1px)}
 
 .section{padding:44px 0}
+.section.is-hidden{display:none}
 .section--soft{background:#f7f9fc}
 .section__title{font-size:36px;font-weight:950;text-align:center}
 .section__subtitle{text-align:center;color:var(--muted);margin-top:6px;font-size:16px}
