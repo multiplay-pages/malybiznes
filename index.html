@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Oferta Biznes 3.1 — Konfigurator</title>
+  <meta name="description" content="Konfigurator oferty Internet dla Firm — ceny netto, dodatki i podsumowanie." />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar__inner">
+      <div class="brand">
+        <div class="brand__logo">MP</div>
+        <div class="brand__text">
+          <div class="brand__title">Oferta Biznes 3.1</div>
+          <div class="brand__subtitle">Konfigurator • Cennik Netto</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="#cennik">Cennik</a>
+        <a href="#dodatki">Dodatki</a>
+        <a href="#podsumowanie">Podsumowanie</a>
+        <a class="btn btn--ghost" href="#kontakt">Kontakt</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero__inner">
+        <div>
+          <h1>Internet dla Firm — prosto, jasno, bez magii.</h1>
+          <p class="muted">
+            Wybierz okres umowy, taryfę i dodatki. Na końcu masz czytelne podsumowanie cen netto (+ VAT).
+          </p>
+
+          <div class="cta">
+            <a class="btn" href="#cennik">Konfiguruj ofertę</a>
+            <a class="btn btn--ghost" href="#kontakt">Zamów kontakt</a>
+          </div>
+
+          <div class="chips">
+            <span class="chip">Ceny netto</span>
+            <span class="chip">Dodatki opcjonalne</span>
+            <span class="chip">Podsumowanie 1:1</span>
+          </div>
+        </div>
+
+        <div class="card hero__card">
+          <div class="card__title">Okres umowy</div>
+          <div class="toggle" role="group" aria-label="Okres umowy">
+            <button id="btn24" class="toggle__btn is-active" type="button">24 miesiące</button>
+            <button id="btn12" class="toggle__btn" type="button">12 miesięcy</button>
+          </div>
+          <div class="tiny muted">
+            Po zakończeniu okresu promocyjnego umowa przechodzi na czas nieokreślony,
+            a abonament wzrasta o <strong>20 zł netto</strong>.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="cennik" class="section">
+      <div class="container">
+        <div class="section__head">
+          <h2>Cennik Internetu</h2>
+          <p class="muted">Wybierz jedną taryfę. Ceny netto (+23% VAT).</p>
+        </div>
+
+        <div id="plans" class="grid"></div>
+      </div>
+    </section>
+
+    <section id="dodatki" class="section section--alt">
+      <div class="container">
+        <div class="section__head">
+          <h2>Dodatki</h2>
+          <p class="muted">Zaznacz, co ma być uruchomione. Ceny netto.</p>
+        </div>
+
+        <div class="addons">
+          <div class="addons__col">
+            <h3>Telefon stacjonarny</h3>
+            <div id="addonsPhone" class="list"></div>
+          </div>
+
+          <div class="addons__col">
+            <h3>Infrastruktura</h3>
+            <div id="addonsInfra" class="list"></div>
+            <div class="tiny muted">
+              Stały adres IP niedostępny dla taryf <strong>100 Mb/s</strong> i <strong>600 Mb/s</strong>.
+              WiFi Premium dostępne od taryfy <strong>600 Mb/s</strong>.
+            </div>
+          </div>
+
+          <div class="addons__col">
+            <h3>Bezpieczeństwo</h3>
+            <div id="addonsSec" class="list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="podsumowanie" class="section">
+      <div class="container">
+        <div class="section__head">
+          <h2>Podsumowanie</h2>
+          <p class="muted">Suma jest liczona automatycznie na podstawie wyborów.</p>
+        </div>
+
+        <div class="summary">
+          <div class="card">
+            <div class="card__title">Twoja konfiguracja</div>
+            <div id="summaryLines" class="summary__lines"></div>
+          </div>
+
+          <div class="card summary__total">
+            <div class="card__title">Razem</div>
+            <div class="price">
+              <div class="price__value" id="totalNet">0 zł</div>
+              <div class="tiny muted">netto / miesiąc</div>
+            </div>
+            <div class="price">
+              <div class="price__value" id="totalGross">0 zł</div>
+              <div class="tiny muted">brutto / miesiąc (VAT 23%)</div>
+            </div>
+
+            <div class="cta">
+              <a class="btn" href="#kontakt">Wyślij zapytanie</a>
+              <button class="btn btn--ghost" id="copySummary" type="button">Kopiuj podsumowanie</button>
+            </div>
+
+            <div class="tiny muted">
+              Oferta dostępna w zasięgu sieci. Szczegóły i warunki potwierdzamy w kontakcie.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="kontakt" class="section section--alt">
+      <div class="container">
+        <div class="section__head">
+          <h2>Kontakt</h2>
+          <p class="muted">Tu możesz wkleić swoje dane / formularz / link do CRM.</p>
+        </div>
+
+        <div class="card">
+          <div class="contact">
+            <div>
+              <div class="contact__label">Telefon</div>
+              <div class="contact__value">+48 …</div>
+            </div>
+            <div>
+              <div class="contact__label">E-mail</div>
+              <div class="contact__value">…@multiplay.pl</div>
+            </div>
+            <div>
+              <div class="contact__label">Zasięg</div>
+              <div class="contact__value"><a href="#">Sprawdź adres</a></div>
+            </div>
+          </div>
+          <div class="tiny muted">Możemy tu też dodać prosty formularz (GitHub Pages obsłuży np. Formspree / Getform).</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container tiny">
+      © Multiplay Pages • Podane ceny są cenami netto (+23% VAT).
+    </div>
+  </footer>
+
+  <script src="./app.js"></script>
+</body>
+</html>
